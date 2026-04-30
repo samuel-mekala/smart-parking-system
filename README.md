@@ -1,190 +1,132 @@
-# 🅿️ New Parking System — IoT-Enabled Smart Parking Solution
+# 🅿️ Smart Parking System
 
-> **Academic Paper / IoT Project** · VIT-AP University  
-> **Authors:** Mekala Samuel · M. Bhanu Prakash · Shaik Mohammad Mujahiddin · N. Sandeep  
-> **Student ID:** 21BCB7145
+> **IoT Project** · VIT-AP University  
+> **Team:** **Mekala Samuel (21BCB7145)** · M. Bhanu Prakash (21BCB7050) · Shaik Mohammad Mujahiddin (21BCB7101) · N. Sandeep (21BCB7166)
 
----
+-----
 
 ## 📌 Overview
 
-Urbanization and rising car ownership have made parking one of the biggest pain points in modern cities — causing traffic congestion, energy waste, and security vulnerabilities. This project introduces the **"New Parking System"**, a smart IoT-based parking management solution that uses:
+Finding a parking spot wastes time, fuel, and increases urban congestion. This project builds an **IoT-enabled smart parking management system** that monitors real-time slot availability, controls gate access with password protection, and reduces energy consumption with motion-activated lighting.
 
-- 🔐 **Password-protected access control** (keypad entry)
-- 📡 **Ultrasonic distance sensing** (real-time slot detection)
-- ⚙️ **Servo motor actuation** (automated gate control)
-- 💡 **Motion-activated lighting** (energy conservation)
+-----
 
-The result: a more **secure, space-efficient, and energy-responsible** urban parking experience.
+## ✨ Features
 
----
+- 🔍 **Real-time slot detection** — HC-SR04 ultrasonic sensors monitor 4 parking slots continuously
+- 🔐 **Password-protected gate** — 4×4 keypad entry controls a servo motor barrier
+- 💡 **Motion-activated lighting** — PIR sensor auto-turns lights on/off with 30s timeout
+- 📟 **LCD status display** — shows free slot count and per-slot occupancy map live
+- 🚫 **Overflow prevention** — gate stays closed and shows “Parking FULL!” when all slots are taken
+- 🔴 **Per-slot LEDs** — LED ON = occupied, OFF = free
 
-## 🏗️ System Architecture
-
-```
-Power Supply
-     ↓
-  Arduino UNO  ──────────→  Servo Motor (Gate Control)
-     ↑    ↓
-  Keypad    Ultrasonic Sensor (Slot Detection)
-             ↓
-        Motion Sensor → LED Lighting (Auto ON/OFF)
-```
-
-**Block Diagram Flow:**
-```
-Power Supply → Arduino → Servo Motor (open/close gate)
-                ↑
-             Keypad (password entry)
-                ↑
-          Ultrasonic Sensor (detect car presence)
-```
-
----
-
-## ⚙️ How It Works
-
-### 1. Access Control
-- Driver enters **password via keypad**
-- Arduino validates the password
-- If correct → **servo motor opens the gate**
-- If incorrect → gate stays closed (security maintained)
-
-### 2. Slot Detection
-- **Ultrasonic sensors** continuously measure distance to detect if a slot is occupied or vacant
-- Real-time occupancy data is processed by the Arduino
-
-### 3. Motion-Activated Lighting
-- **Motion sensors** trigger LED lights only when a vehicle or person is present
-- Lights auto-OFF when area is empty → significant energy savings
-
-### 4. Gate Automation
-- **Servo motor** controls the physical barrier
-- Opens on valid entry, closes after vehicle passes
-- Prevents unauthorized access at all times
-
----
+-----
 
 ## 🔧 Hardware Components
 
-| Component | Purpose |
-|---|---|
-| **Arduino UNO** | Main microcontroller — processes all inputs/outputs |
-| **Ultrasonic Sensor** | Measures distance to detect vehicle presence in slots |
-| **Servo Motor** | Actuates the parking gate (open/close) |
-| **Keypad** | Password input for access control |
-| **Motion Sensor** | Triggers lighting when movement detected |
-| **LED Lights** | Energy-efficient motion-activated lighting |
-| **Power Supply** | Powers the entire system |
+|Component                          |Purpose                                     |
+|-----------------------------------|--------------------------------------------|
+|**Arduino Uno**                    |Main microcontroller                        |
+|**HC-SR04 Ultrasonic Sensors (×4)**|Detect whether each parking slot is occupied|
+|**Servo Motor (SG90)**             |Controls the entry gate                     |
+|**4×4 Keypad**                     |Password input for gate access              |
+|**16×2 LCD Display**               |Shows real-time slot availability           |
+|**PIR Motion Sensor**              |Triggers automatic parking area lighting    |
+|**LEDs (×4)**                      |Per-slot occupancy indicators               |
+|**Light Relay Module**             |Switches parking lights via PIR             |
+|**Power Supply**                   |5V regulated supply                         |
 
----
+-----
 
 ## 💻 Software
 
-| Component | Details |
-|---|---|
-| **IDE** | Arduino IDE |
-| **Language** | C (Arduino/ATmega328) |
-| **Key Libraries** | `Servo.h` · `Keypad.h` · `NewPing.h` (ultrasonic) |
+|Component    |Details                                   |
+|-------------|------------------------------------------|
+|**IDE**      |Arduino IDE                               |
+|**Language** |C (Arduino / ATmega328)                   |
+|**Libraries**|`LiquidCrystal.h` · `Servo.h` · `Keypad.h`|
 
----
+-----
 
-## 🎯 Key Features
+## ⚙️ How It Works
 
-| Feature | Benefit |
-|---|---|
-| Password-protected entry | Prevents unauthorized parking |
-| Real-time slot detection | Drivers know instantly if space is available |
-| Automated gate control | No manual intervention needed |
-| Motion-activated lights | Reduces energy consumption significantly |
-| Scalable architecture | Can be expanded to multi-floor parking systems |
+```
+System Boot → LCD shows "Smart Parking System v1.0"
+        ↓
+Continuous Loop:
+  → Ultrasonic sensors measure distance to each slot
+  → Slot LED: ON (occupied) / OFF (free)
+  → LCD: "Free: X/4" + slot map (1:O=open, 1:X=taken)
+  → PIR detects motion → lights ON (auto-off after 30s)
+        ↓
+User approaches keypad:
+  → Type password digits → press # to confirm
+  → Correct + free slot available → Gate opens (5s) → closes
+  → Wrong password          → LCD: "Wrong Password!"
+  → All slots full           → LCD: "Parking FULL!"
+  → Press * to clear input
+```
 
----
+-----
 
-## 📊 Problem → Solution Mapping
+## 🛠️ Tech Stack
 
-| Problem | Our Solution |
-|---|---|
-| Traffic congestion from parking search | Real-time slot availability detection |
-| Unauthorized parking | Password-protected servo gate |
-| Energy waste from always-on lights | Motion-activated LED system |
-| Manual gate operation | Automated servo motor actuation |
-| Poor space utilization | Ultrasonic sensors for precise slot monitoring |
+![C](https://img.shields.io/badge/C-00599C?style=flat-square&logo=c&logoColor=white)
+![Arduino](https://img.shields.io/badge/Arduino-00979D?style=flat-square&logo=arduino&logoColor=white)
+![IoT](https://img.shields.io/badge/IoT-Embedded-green?style=flat-square)
 
----
-
-## 🌆 Smart Parking Strategies Explored
-
-This project also reviewed and analyzed 6 key strategies for urban parking efficiency:
-
-1. **Smart Parking Systems** — Sensors + cameras + real-time data
-2. **Shared Parking Concepts** — Off-peak space sharing between buildings
-3. **Dynamic Pricing** — Variable rates based on demand
-4. **Multipurpose Parking Structures** — Adaptable architecture for events/markets
-5. **Alternative Transportation Promotion** — Bike racks, EV charging stations
-6. **Mixed-Use Buildings** — Pooled parking for commercial + residential
-
----
+-----
 
 ## 📁 Project Structure
 
 ```
 smart-parking-system/
-├── firmware/
-│   └── parking_system.ino     # Main Arduino sketch
-├── schematics/
-│   └── circuit_diagram.png    # Full wiring diagram
-├── docs/
-│   └── research_paper.pdf     # Published paper
-├── images/
-│   └── prototype.jpg          # Working prototype photo
-├── requirements.txt
+├── smart_parking_system.ino   # Main Arduino sketch
 └── README.md
 ```
 
----
+-----
 
 ## 🚀 How to Deploy
 
 ```
-1. Wire all components as per the circuit diagram
-2. Open firmware/parking_system.ino in Arduino IDE
-3. Set your password in the code:
-   char password[] = "1234";  // Change this
-4. Upload to Arduino UNO
-5. Power the system
-6. Test: Enter password on keypad → gate opens → ultrasonic detects car
+1. Install required libraries in Arduino IDE
+   (Sketch → Include Library → Manage Libraries):
+   - Keypad by Mark Stanley
+   (LiquidCrystal and Servo are built-in — no install needed)
+
+2. Wire components to Arduino Uno:
+   - LCD (16×2)              : RS=12, E=11, D4=5, D5=4, D6=3, D7=2
+   - Servo motor (SG90)      : Signal=Pin 9
+   - Ultrasonic sensor Slot1 : TRIG=A0, ECHO=A1
+   - Ultrasonic sensor Slot2 : TRIG=A2, ECHO=A3
+   - Ultrasonic sensor Slot3 : TRIG=A4, ECHO=A5
+   - Ultrasonic sensor Slot4 : TRIG=6,  ECHO=7
+   - PIR sensor              : OUT=Pin 10
+   - Slot LEDs               : Pin 13 (Slot 1), Pin 8 (Slot 2)
+   Note: adjust slotLEDs[] array in sketch if wiring differently
+
+3. Update the password in smart_parking_system.ino:
+   const String PASSWORD = "1234";  ← change to your PIN
+
+4. Open smart_parking_system.ino in Arduino IDE
+5. Select Board: Arduino Uno → select correct COM Port → Upload
+
+6. Power on — LCD shows "Smart Parking System v1.0" then live slot status
+   - Enter password on keypad → press # to open gate
+   - Press * to clear entry at any time
 ```
 
----
+-----
 
 ## 🔮 Future Scope
 
-- [ ] Mobile app integration for remote slot booking and payment
-- [ ] Integration with Google Maps / Waze for navigation to open slots
-- [ ] Cloud dashboard for facility managers (occupancy, revenue, reports)
-- [ ] Dynamic pricing based on real-time demand
-- [ ] Multi-floor support with floor-wise slot tracking
-- [ ] RFID / QR code based access (replacing keypad)
-- [ ] Camera-based license plate recognition for security
+- [ ] **Mobile app** — view slot availability remotely via Wi-Fi (ESP8266)
+- [ ] **RFID/NFC access** — contactless entry instead of keypad
+- [ ] **Cloud dashboard** — track occupancy history and peak hours
+- [ ] **Automated billing** — time-based parking fee calculation
+- [ ] **Multi-level support** — scale to multiple floors with a central display
 
----
+-----
 
-## 📚 References
-
-1. Widyasari et al. — IoT-based Smart Parking System, ICODSE 2019
-2. Vinay Raj Tripathi — Smart Vehicle Parking System Using IoT, ICE3 2020
-3. S. Gunanandhini et al. — Smart Parking with Surveillance Using IoT, ICACCS 2022
-4. Namgiri Suresh et al. — IoT-powered Smart Car Parking Solutions, ICAAIC 2023
-5. Yuchang Wu — Optimizing Urban Public Parking Resources, ITAIC 2022
-6. Shanmugapriya P et al. — IoT-based Control and Management for Parking, ICPECTS 2022
-
----
-
-## 🖼️ Prototype
-
-![Working Prototype](images/prototype.jpg)
-
----
-
-*VIT-AP University · IoT & Embedded Systems · Samuel Mekala (21BCB7145)*
+*VIT-AP University · IoT & Embedded Systems Project*
