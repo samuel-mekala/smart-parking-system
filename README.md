@@ -22,6 +22,34 @@ Finding a parking spot wastes time, fuel, and increases urban congestion. This p
 
 -----
 
+## 🔧 Hardware Setup
+ 
+![Hardware Setup](images/hardware_setup.png)
+ 
+---
+ 
+## 🏗️ System Architecture
+ 
+![System Diagram](images/system_diagram.png)
+ 
+```
+System Boot → LCD: "Smart Parking System v1.0"
+        ↓
+Continuous Loop:
+  → Ultrasonic sensors measure distance to each slot
+  → LED ON (occupied) / OFF (free)
+  → LCD: "Free: X/4" + slot map
+  → PIR motion → lights ON (auto-off 30s)
+        ↓
+User at keypad:
+  → Enter password → press #
+  → Correct + slot free → Gate opens (5s) → closes
+  → Wrong password    → LCD: "Wrong Password!"
+  → All slots full    → LCD: "Parking FULL!"
+```
+ 
+---
+
 ## 🔧 Hardware Components
 
 |Component                          |Purpose                                     |
@@ -48,27 +76,6 @@ Finding a parking spot wastes time, fuel, and increases urban congestion. This p
 
 -----
 
-## ⚙️ How It Works
-
-```
-System Boot → LCD shows "Smart Parking System v1.0"
-        ↓
-Continuous Loop:
-  → Ultrasonic sensors measure distance to each slot
-  → Slot LED: ON (occupied) / OFF (free)
-  → LCD: "Free: X/4" + slot map (1:O=open, 1:X=taken)
-  → PIR detects motion → lights ON (auto-off after 30s)
-        ↓
-User approaches keypad:
-  → Type password digits → press # to confirm
-  → Correct + free slot available → Gate opens (5s) → closes
-  → Wrong password          → LCD: "Wrong Password!"
-  → All slots full           → LCD: "Parking FULL!"
-  → Press * to clear input
-```
-
------
-
 ## 🛠️ Tech Stack
 
 ![C](https://img.shields.io/badge/C-00599C?style=flat-square&logo=c&logoColor=white)
@@ -78,23 +85,26 @@ User approaches keypad:
 -----
 
 ## 📁 Project Structure
-
+ 
 ```
 smart-parking-system/
-├── smart_parking_system.ino   # Main Arduino sketch
+├── images/
+│   ├── hardware_setup.png      # Hardware photo
+│   └── system_diagram.png      # System architecture diagram
+├── smart_parking_system.ino    # Main Arduino sketch
 └── README.md
 ```
 
 -----
 
 ## 🚀 How to Deploy
-
+ 
 ```
 1. Install required libraries in Arduino IDE
    (Sketch → Include Library → Manage Libraries):
    - Keypad by Mark Stanley
-   (LiquidCrystal and Servo are built-in — no install needed)
-
+   (LiquidCrystal and Servo are built-in)
+ 
 2. Wire components to Arduino Uno:
    - LCD (16×2)              : RS=12, E=11, D4=5, D5=4, D6=3, D7=2
    - Servo motor (SG90)      : Signal=Pin 9
@@ -104,20 +114,19 @@ smart-parking-system/
    - Ultrasonic sensor Slot4 : TRIG=6,  ECHO=7
    - PIR sensor              : OUT=Pin 10
    - Slot LEDs               : Pin 13 (Slot 1), Pin 8 (Slot 2)
-   Note: adjust slotLEDs[] array in sketch if wiring differently
-
+ 
 3. Update the password in smart_parking_system.ino:
    const String PASSWORD = "1234";  ← change to your PIN
-
+ 
 4. Open smart_parking_system.ino in Arduino IDE
-5. Select Board: Arduino Uno → select correct COM Port → Upload
-
-6. Power on — LCD shows "Smart Parking System v1.0" then live slot status
-   - Enter password on keypad → press # to open gate
+5. Select Board: Arduino Uno → select COM Port → Upload
+ 
+6. Power on → LCD shows live slot status
+   - Enter password → press # to open gate
    - Press * to clear entry at any time
 ```
-
------
+ 
+---
 
 ## 🔮 Future Scope
 
