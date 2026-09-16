@@ -4,6 +4,9 @@
 > **Authors:** **Mekala Samuel (21BCB7145)** · M. Bhanu Prakash (21BCB7050) · Shaik Mohammad Mujahiddin (21BCB7101) · N. Sandeep (21BCB7166)  
 > **Paper:** *"New Parking System: Revolutionizing Parking Management Through IoT-Enabled Smart Parking Solutions"*
 
+🌐 **Live Online Web Application:** **[https://smart-parking-system-sps.streamlit.app/](https://smart-parking-system-sps.streamlit.app/)**  
+📂 **GitHub Repository:** **[https://github.com/samuel-mekala/smart-parking-system](https://github.com/samuel-mekala/smart-parking-system)**
+
 ---
 
 ## 📌 Overview
@@ -21,6 +24,13 @@ Urban traffic congestion and inefficient parking management result in wasted tim
 
 ---
 
+## 🌐 Live Online Deployment
+
+The project is deployed online and accessible globally:
+👉 **[https://smart-parking-system-sps.streamlit.app/](https://smart-parking-system-sps.streamlit.app/)**
+
+---
+
 ## 🏗️ System Architecture
 
 ```
@@ -31,7 +41,8 @@ smart-parking-system/
 │   ├── dataset.csv             # 90-day hourly parking occupancy dataset
 │   └── parking_demand_model.pkl# Saved RandomForest ML model artifact
 ├── iot_simulator.py            # Virtual hardware sensor simulator
-├── test_system.py              # Automated unit and integration test suite
+├── test_system.py              # Unit & integration test suite
+├── run_full_e2e_test.py        # Comprehensive end-to-end test runner
 ├── smart parking system.ino    # Arduino C sketch for hardware deployment
 ├── requirements.txt            # Python dependencies
 ├── Procfile                    # Web deployment startup configuration
@@ -63,9 +74,9 @@ python ml_model/train_model.py
 ```
 *Output: Generates `ml_model/dataset.csv` and saves `ml_model/parking_demand_model.pkl` ($R^2 \approx 0.78$, MAE $\approx 10.0\%$).*
 
-### 4. Run Automated End-to-End Tests
+### 4. Run Automated End-to-End Test Suite
 ```bash
-python test_system.py
+python run_full_e2e_test.py
 ```
 
 ### 5. Launch Local Web Application
@@ -91,24 +102,6 @@ Open your browser at **`http://localhost:8501`** (or **`http://localhost:8505`**
 ### 3. 🧠 ML Demand Prediction
 - **Interactive Predictor**: Set Hour of Day, Day of Week, Temperature, and Special Event flags to predict occupancy rate.
 - **24-Hour Forecast Curve**: Plotly interactive graph displaying predicted demand for the next 24 hours.
-
----
-
-## 🌐 Web Deployment Instructions
-
-### Deploying to Streamlit Community Cloud (Free & Instant)
-1. Push this repository to GitHub.
-2. Go to [share.streamlit.io](https://share.streamlit.io).
-3. Connect your GitHub repository: `samuel-mekala/smart-parking-system`.
-4. Main file path: `app.py`.
-5. Click **Deploy**!
-
-### Deploying to Render
-1. Connect your repository on [render.com](https://render.com).
-2. Render will automatically detect `render.yaml` or set:
-   - **Environment**: Python
-   - **Build Command**: `pip install -r requirements.txt && python ml_model/train_model.py`
-   - **Start Command**: `streamlit run app.py --server.port $PORT --server.address 0.0.0.0`
 
 ---
 
