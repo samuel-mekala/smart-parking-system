@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: smart-parking-system
+    env: python
+    buildCommand: pip install -r requirements.txt && python ml_model/train_model.py
+    startCommand: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
